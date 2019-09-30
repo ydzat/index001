@@ -1,1 +1,72 @@
-start
+surface pro 4 和 manjaro linux双系统
+准备工作：
+  下载manjaro KDE
+  下载rufus
+  1个u盘
+
+对surface pro 4的操作：
+  解锁，先去微软官方登录你的微软账号，点开你的设备，找到你的bitlock码，用笔记下来（手机也行啦）
+  打开设置-更新和安全-设备加密，在右侧选择“关闭”。
+  关闭苏菲，点击1次开机后，按住音量+，直到进入UEFI界面，进入 安全 选项，关闭TPM。在boot里把USB启动排到第一位。
+  在安全引导中选择None
+  然后重启苏菲，输入之前记录下来的bitlock码。
+  （注：在解锁之后，不能用pin或面部识别登陆surface，只能用微软密码或本地密码）
+
+进入win10系统，打开rufus，设备里选中你的U盘，引导类型选择里选择已下好的manjaro镜像文件。
+（如果检测不到你的U盘，那么把隐藏的高级设备选项中的“显示USB外置硬盘”勾选）
+
+
+然后点击开始。(其他教程中提到要在此时选择“以DD镜像模式写入”，但我的没有提示，如果有此选项，则勾选）
+等待写入完成后，关闭rufus。
+重启surface进入manjaro安装界面。
+
+时区选择你所在位置，语言中文，driver设置为nonfree
+然后Boot:xxx开始安装
+
+进入安装界面，小窗口左上角选择语言
+右下角联网
+然后中间靠下的位置 启动安装程序
+设置里选择你对应的地区和区域，键盘选择对应的键盘
+然后分区中，选择并存安装
+选择磁盘，然后选择给manjaro分配的空间大小（大概60G以上？按照你自己需求来吧）
+
+然后后面的用户名密码什么的你自己填写，最后进行安装。
+
+最后重启后，进入已经安装好的系统。
+
+接下来是对manjaro的设置：
+首先调整缩放，左下角开始菜单，进入系统设置，再进入显示和监控，右侧 缩放显示 中，选择一个你觉得合适的大小，确定。
+然后下面的菜单右侧点击看起来像滑块的图标，进入配置面板，拖动菜单栏高度，选择一个你喜欢的大小。
+重启
+
+（终端快捷键ctrl alt t）
+1.排列源 
+终端中输入：sudo pacman-mirrors -i -c China -m rank
+在弹出的窗口中选择一个快的
+
+2.增加archlinuxcn库和antergos库
+echo -e "\n[archlinuxcn]\nSigLevel = TrustAll\nServer = https://mirrors.tuna.tsinghua.edu.cn/archlinuxcn/\$arch\n\n[antergos]\nSigLevel = TrustAll\nServer = https://mirrors.tuna.tsinghua.edu.cn/antergos/\$repo/\$arch\n"|sudo tee -a /etc/pacman.conf
+sudo pacman -Syyu   #升级系统
+sudo pacman -S --noconfirm archlinuxcn-keyring antergos-keyring #安装archlinuxcn签名钥匙&antergos签名钥匙
+
+3.AUR助手
+sudo pacman -S --noconfirm yaourt
+
+4.中文输入法
+sudo pacman -S fcitx-im #默认全部安装
+sudo pacman -S fcitx-configtool
+yaourt -S fcitx-sogoupinyin
+
+sudo vim ~/.xprofile    #配置输入法
+加上后面几句保存，重启
+export LANG=zh_CN.UTF-8
+export LC_ALL=zh_CN.UTF-8
+export GTK_IM_MODULE=fcitx
+export QT_IM_MODULE=fcitx
+export XMODIFIERS=”@im=fcitx”
+
+（可能需要先手动安装vim：sudo pacman -S vim）
+(或者，打开资源管理器，进入home/你的用户名/，直接打开.xprofile）
+
+待续
+‘’
