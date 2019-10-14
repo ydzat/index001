@@ -1,1 +1,105 @@
+Windows下的Haskell配置
 
+当前Haskell版本： 8.6.5
+Stack版本：2.1.3
+
+下载Haskell安装后，在cmd下寻找cabal并设置
+cabal user-config init
+会显示一行地址
+找到该地址，编辑config文件
+extra-prog-path: C:\Program Files\Haskell Platform\8.6.5\msys\usr\bin
+extra-lib-dirs: C:\Program Files\Haskell Platform\8.6.5\mingw\lib
+extra-include-dirs: C:\Program Files\Haskell Platform\8.6.5\mingw\include
+此时就可以用cabal安装第三方库，使用GHCI和GHC来解释和编译hs文件了。
+
+安装stack：
+文件解压在%APPDATA%\local\bin
+可以用echo %APPDATA%来确定此路径
+
+配置：
+当前版本默认全局配置文件位于： C:\WINDOWS\system32\stack.yaml
+打开，编辑：
+# This file contains default non-project-specific settings for 'stack', used
+# in all projects.  For more information about stack's configuration, see
+# http://docs.haskellstack.org/en/stable/yaml_configuration/
+#
+
+templates:
+    params:
+        author-name: hellmonky
+        author-email: hellmonky@qq.com
+        category: personal project
+        copyright: 'Copyright: (c) 2016 hellmonky'
+        github-username: hellmonky
+        
+此时，在下次执行"stack new currentProject"时，会默认使用这个全局配置作为蓝本生成工程，在新生成的currentProject工程目录下的currentProject.cabal文件中就会出现如下内容：
+name:                currentProject
+version:             0.1.0.0
+synopsis:            Initial project template from stack
+description:         Please see README.md
+homepage:            https://github.com/hellmonky/testProfile#readme
+license:             BSD3
+license-file:        LICENSE
+author:              hellmonky
+maintainer:          hellmonky@qq.com
+copyright:           Copyright: (c) 2016 hellmonky
+category:            personal project
+build-type:          Simple
+-- extra-source-files:
+cabal-version:       >=1.10
+
+（注：根据设置的不同，上述内容会出现变化）表示当前的stack全局设置生效了。
+安装：
+stack setup
+之后就可以用stack ghc和stack ghci了
+stack path可以查看相关文件位置
+stack upgrade升级
+stack version查看版本
+
+
+stack new helloworld创建新工程
+代码写在app/Main.hs中：
+module Main where
+
+import System.Environment
+
+main :: IO ()
+main = do 
+    args <- getArgs
+    putStrLn ("Hello, " ++ args !! 0)
+保存后命令行执行
+stack build
+检测生成的文件是否可以正确的执行：
+stack exec helloworld-exe hellmonky
+使用stack的exec命令来指定当前工程的可执行文件，这儿的名称为helloworld-exe，后面跟着这个程序运行所需要的参数。回车后如果程序执行正常，表示当前stack的编译完成正确。基本的使用stack构建haskell工程的步骤就完成了。
+----------------
+总结：
+stack new my-project
+cd my-project
+stack setip
+stack build
+stack exec my-project-exe
+
+在第一步骤 "stack new hellworld" 命令创建工程文件后，生成了如下的文件结构：
+
+.
+├── LICENSE
+├── Setup.hs
+├── app
+│   └── Main.hs
+├── hellworld.cabal
+├── src
+│   └── Lib.hs
+├── stack.yaml
+└── test
+    └── Spec.hs
+
+    3 directories, 7 files
+其中src目录下主要包含创建library文件的源代码，而app目录下则主要包含可执行文件相关的源代码文件。 如果在编写源代码的过程中，需要调用其它的第三方库，例如text库，具体的步骤为：
+
+编辑当前工程目录的hellworld.cabal文件，在其中的build-depends段落中添加需要引入的text包名，否则在执行stack build的时候会报“Could not find module”错误；
+重新执行stack build命令一次，stack会索引hellworld.cabal文件，然后下载所引入的包；
+如果在执行stack build命令的时候遇到“your package isn't in the LTS”错误，尝试在stack.yaml文件的extra-deps段落中添加对应包的更新的版本说明，然后再次执行stack build命令，直到没有错误发生；
+执行stack build正确后，即生成对应的库文件和可执行文件。
+
+//全文参考：https://github.com/hellmonky/note/blob/master/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E5%85%B3%E4%BA%8Evscode%E6%90%AD%E5%BB%BAh%E7%8E%AF%E5%A2%83%E7%9A%84%E8%BF%87%E7%A8%8B.md
