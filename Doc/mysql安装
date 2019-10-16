@@ -1,1 +1,30 @@
-1
+官网下载.zip，解压缩到你要装的目录
+在根目录找到my-default.ini文件（如果没有就手动创建一个）
+复制一下内容：
+[client]
+port=3306
+default-character-set=utf8
+[mysqld]
+port=3306
+character_set_server=utf8
+basedir= D:\mysql\mysql-8.0.18-winx64
+#解压目录
+datadir= D:\mysql\mysql-8.0.18-winx64\data
+#解压目录下data目录
+sql_mode=NO_ENGINE_SUBSTITUTION,STRICT_TRANS_TABLES
+[WinMySQLAdmin]
+D:\mysql\mysql-8.0.18-winx64\bin\mysqld.exe
+
+其中地址为你解压的地址
+
+在系统变量中新建环境变量，名字为MYSQL_HOME，内容为解压地址
+在PATH中添加新的内容，为%MYSQL_HOME%
+（注：win10系统下，可以直接添加，不需要分号';'，如果是win7或以下，则需要写为;%MYSQL_HOME%）
+
+管理员运行cmd(或windows power shell)，执行mysqld --install 或.\mysqld --install
+随后执行mysql --initialize 或.\mysql --initialize
+
+到此时已经最初安装完毕，接下来是执行net start mysql来启动服务。
+
+---------------
+
