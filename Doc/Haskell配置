@@ -103,3 +103,14 @@ stack exec my-project-exe
 执行stack build正确后，即生成对应的库文件和可执行文件。
 
 //全文参考：https://github.com/hellmonky/note/blob/master/%E8%AF%AD%E8%A8%80%E5%AD%A6%E4%B9%A0%E8%AE%B0%E5%BD%95/%E5%85%B3%E4%BA%8Evscode%E6%90%AD%E5%BB%BAh%E7%8E%AF%E5%A2%83%E7%9A%84%E8%BF%87%E7%A8%8B.md
+
+---------------------------------
+
+Manjaro下安装
+
+先更新系统sudo pacman -Syyu
+安装：sudo pacman -S stack
+stack ghci
+（然后退出stack是:quit）
+
+
