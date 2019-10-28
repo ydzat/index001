@@ -8,7 +8,7 @@
 2.下载并安装好Visual cpp Build Tools full(网上找下载地址)
 3.下载并安装vcpkg包
 4.下载视频中所需的一键安装包
-5.在VSCode的应用商店中下载插件：C/C++，Visual Studio IntelliCode，Vscode-Turtle。
+5.在VSCode的应用商店中下载插件：C/C++，Visual Studio IntelliCode。
 
 配置：
 1.把一键安装包解压缩，然后管理员启动.exe文件，选择安装位置为你的工作空间（也就是你存代码的地方），具体步骤见视频。
