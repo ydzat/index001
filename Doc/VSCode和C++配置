@@ -1,0 +1,41 @@
+上网查配置方法半个月，找到了个20s配置法，感谢B站up主SDchao
+视频链接：https://www.bilibili.com/video/av52434248/
+（windows环境）
+----------
+
+下载及安装：
+1.下载并安装好VSCode
+2.下载并安装好Visual cpp Build Tools full(网上找下载地址)
+3.下载并安装vcpkg包
+4.下载视频中所需的一键安装包
+5.在VSCode的应用商店中下载插件：C/C++，Visual Studio IntelliCode，Vscode-Turtle。
+
+配置：
+1.把一键安装包解压缩，然后管理员启动.exe文件，选择安装位置为你的工作空间（也就是你存代码的地方），具体步骤见视频。
+2.（按需求选择，非必须）打开工作空间中的.vscode/launch.json，修改externalConsole的值为False，这种修改可以使输出端口为下方的“调试控制台”，而非
+  终端或外部终端。
+3.（按需求选择，非必须）应用商店中下载Code Runner，然后左上角 文件-首选项-设置 里搜索框中输入code-runner.executorMap，点击“在settings.json中
+  编辑”，添加项
+  "c": "cd $dir && gcc $fileName -o $fileNameWithoutExt && $dir$fileNameWithoutExt",
+  "cpp": "g++ $fileName  -o $fileNameWithoutExt.exe && ./$fileNameWithoutExt.exe",
+  （注意：项后方有','，不过最后一项可以不加）
+  如果此时你没有进行步骤2的话，你的编辑器右上方会出现一个三角，就是运行，运行结果会在下方的“输出”里输出。
+
+完成！
+
+测试你的配置：
+在你的工作区新建一个文件夹，里面新建立一个.cpp文件，比如：
+#include <iostream>
+#include <vector>
+#include <string>
+
+using namespace std;
+
+int main()
+{
+
+    cout<<"Hello world!"<<endl;
+    return 0;
+}
+然后运行它，如果下面成功输出了，那就ok。
+如果不ok，那你再查查吧。
